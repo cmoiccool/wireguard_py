@@ -5,7 +5,7 @@ Copyright (c) Meta Platforms, Inc. and affiliates.
 This software may be used and distributed according to the terms of the
 MIT License.
 """
-__version__ = "trunk"
+__version__ = "2024.10.3"
 
 from .wireguard_py import (
     delete_peer,
