@@ -1,7 +1,16 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
 from setuptools import Extension, setup
+from setuptools.command.build_ext import build_ext as SetuptoolsBuildExt
 from setuptools.command.sdist import sdist as SetuptoolsSdist
+
+
+class build_ext(SetuptoolsBuildExt):
+    def run(self):
+        from Cython.Build import cythonize
+
+        cythonize(["wireguard_py/wireguard_py.pyx"])
+        super().run()
 
 
 class sdist_cythonize(SetuptoolsSdist):
@@ -34,7 +43,7 @@ extensions = [
 
 setup(
     packages=["wireguard_py"],
-    cmdclass={"sdist": sdist_cythonize},
+    cmdclass={"build_ext": build_ext, "sdist": sdist_cythonize},
     include_package_data=False,
     ext_modules=extensions,
     entry_points={
